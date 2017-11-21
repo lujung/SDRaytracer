@@ -1,6 +1,6 @@
-package Raytracer;
+package Raytracer.Util;
 
-class DEBUG {
+class Logging {
     static void debug(String s) {
     } // System.err.println(s); }
 }

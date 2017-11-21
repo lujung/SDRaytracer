@@ -1,4 +1,4 @@
-package Raytracer.datatypes;
+package Raytracer.Datatypes;
 
 public class Triangle {
     Vec3D p1, p2, p3;

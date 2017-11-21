@@ -1,4 +1,4 @@
-package Raytracer.datatypes;
+package Raytracer.Datatypes;
 
 public class Light {
     public RGB color;

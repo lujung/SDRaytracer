@@ -1,6 +1,7 @@
 package Raytracer;
 
-import Raytracer.datatypes.*;
+import Raytracer.Scenes.Scenes;
+import Raytracer.Datatypes.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,10 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /* Implementation of a very simple Raytracer
    Stephan Diehl, Universit�t Trier, 2010-2016
@@ -38,7 +36,7 @@ public class SDRaytracer extends JFrame {
     private Light lights[] = new Light[]{mainLight
             , new Light(new Vec3D(100, 200, 300), new RGB(0.5f, 0, 0.0f))
             , new Light(new Vec3D(-100, 200, 300), new RGB(0.0f, 0, 0.5f))
-            //,new Raytracer.datatypes.Light(new Raytracer.datatypes.Vec3D(-100,0,0), new Raytracer.datatypes.RGB(0.0f,0.8f,0.0f))
+            //,new Raytracer.Datatypes.Light(new Raytracer.Datatypes.Vec3D(-100,0,0), new Raytracer.Datatypes.RGB(0.0f,0.8f,0.0f))
     };
 
     RGB[][] image = new RGB[width][height];
@@ -57,28 +55,6 @@ public class SDRaytracer extends JFrame {
         long time = end - start;
         System.out.println("time: " + time + " ms");
         System.out.println("nrprocs=" + sdr.nrOfProcessors);
-    }
-
-    private void profileRenderImage() {
-        long end, start, time;
-
-        renderImage(); // initialisiere Datenstrukturen, erster Lauf verf�lscht sonst Messungen
-
-        for (int procs = 1; procs < 6; procs++) {
-
-            maxRec = procs - 1;
-            System.out.print(procs);
-            for (int i = 0; i < 10; i++) {
-                start = System.currentTimeMillis();
-
-                renderImage();
-
-                end = System.currentTimeMillis();
-                time = end - start;
-                System.out.print(";" + time);
-            }
-            System.out.println("");
-        }
     }
 
     private SDRaytracer() {
@@ -157,7 +133,7 @@ public class SDRaytracer extends JFrame {
     double tan_fovx;
     double tan_fovy;
 
-    private void renderImage() {
+    public void renderImage() {
         tan_fovx = Math.tan(fovx);
         tan_fovy = Math.tan(fovy);
         for (int i = 0; i < width; i++) {
@@ -169,7 +145,8 @@ public class SDRaytracer extends JFrame {
                 RGB[] col = (RGB[]) futureList[i].get();
                 for (int j = 0; j < height; j++)
                     image[i][j] = col[j];
-            } catch (InterruptedException | ExecutionException e) {}
+            } catch (InterruptedException | ExecutionException e) {
+            }
         }
     }
 
@@ -236,22 +213,40 @@ public class SDRaytracer extends JFrame {
 
     private void createScene() {
         triangles = new ArrayList<Triangle>();
-
-
-        Cube.addCube(triangles, 0, 35, 0, 10, 10, 10, new RGB(0.3f, 0, 0), 0.4f);       //rot, klein
-        Cube.addCube(triangles, -70, -20, -20, 20, 100, 100, new RGB(0f, 0, 0.3f), .4f);
-        Cube.addCube(triangles, -30, 30, 40, 20, 20, 20, new RGB(0, 0.4f, 0), 0.2f);        // gr�n, klein
-        Cube.addCube(triangles, 50, -20, -40, 10, 80, 100, new RGB(.5f, .5f, .5f), 0.2f);
-        Cube.addCube(triangles, -70, -26, -40, 130, 3, 40, new RGB(.5f, .5f, .5f), 0.2f);
-
-
-        Matrix mRx = Matrix.createXRotation((float) (x_angle_factor * Math.PI / 16));
-        Matrix mRy = Matrix.createYRotation((float) (y_angle_factor * Math.PI / 16));
-        Matrix mT = Matrix.createTranslation(0, 0, 200);
-        Matrix m = mT.mult(mRx).mult(mRy);
-        m.print();
-        m.apply(triangles);
+        Scenes.getExampleScene(triangles, y_angle_factor, x_angle_factor);
     }
 
+    static class RaytraceTask implements Callable {
+        private SDRaytracer tracer;
+        private int i;
+
+        RaytraceTask(SDRaytracer t, int ii) {
+            tracer = t;
+            i = ii;
+        }
+
+        public RGB[] call() {
+            RGB[] col = new RGB[tracer.height];
+            for (int j = 0; j < tracer.height; j++) {
+                tracer.image[i][j] = new RGB(0, 0, 0);
+                for (int k = 0; k < tracer.rayPerPixel; k++) {
+                    double di = i + (Math.random() / 2 - 0.25);
+                    double dj = j + (Math.random() / 2 - 0.25);
+                    if (tracer.rayPerPixel == 1) {
+                        di = i;
+                        dj = j;
+                    }
+                    Ray eye_ray = new Ray();
+                    eye_ray.setStart(tracer.startX, tracer.startY, tracer.startZ);   // ro
+                    eye_ray.setDir((float) (((0.5 + di) * tracer.tan_fovx * 2.0) / tracer.width - tracer.tan_fovx),
+                            (float) (((0.5 + dj) * tracer.tan_fovy * 2.0) / tracer.height - tracer.tan_fovy),
+                            (float) 1f);    // rd
+                    eye_ray.normalize();
+                    col[j] = tracer.addColors(tracer.image[i][j], tracer.rayTrace(eye_ray, 0), 1.0f / tracer.rayPerPixel);
+                }
+            }
+            return col;
+        }
+    }
 }
 

@@ -1,4 +1,4 @@
-package Raytracer.datatypes;
+package Raytracer.Datatypes;
 
 public class Vec3D {
     float x, y, z, w = 1;

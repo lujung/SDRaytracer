@@ -1,4 +1,4 @@
-package Raytracer.datatypes;
+package Raytracer.Datatypes;
 
 public class Ray {
     public Vec3D start = new Vec3D(0, 0, 0);
