@@ -1,5 +1,10 @@
 - Export classes from single file into package
 - Extract hard coded example scene
-- Extract profiling code
-- Extract debugging/logging
-- Extract I/O-processing
+- Refactor primitives to create scene objects
+- Extract profiling/testing code
+- Extract debugging/logging, extract I/O-processing
+- Extends -> Composition (JFrame)
+- Make constants final
+- Naming conventions
+- Move functionality of the Cube class
+- Refactor matrix-rotation code
