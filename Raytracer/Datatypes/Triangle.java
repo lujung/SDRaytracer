@@ -6,7 +6,7 @@ public class Triangle {
     public Vec3D normal;
     public float shininess;
 
-    Triangle(Vec3D pp1, Vec3D pp2, Vec3D pp3, RGB col, float sh) {
+    public Triangle(Vec3D pp1, Vec3D pp2, Vec3D pp3, RGB col, float sh) {
         p1 = pp1;
         p2 = pp2;
         p3 = pp3;

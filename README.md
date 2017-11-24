@@ -2,7 +2,7 @@
 - Extract hard coded example scene
 - Refactor primitives to create scene objects
 - Extract profiling/testing code
-- Extract debugging/logging, extract I/O-processing
+- Extract debugging/logging
 - Extends -> Composition (JFrame)
 - Make constants final
 - Naming conventions
