@@ -1,4 +1,4 @@
-package Raytracer.Datatypes;
+package src.main.java.Datatypes;
 
 public class IPoint {
     public final static float epsilon = 0.0001f;

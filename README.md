@@ -1,10 +1,4 @@
-- Export classes from single file into package
-- Extract hard coded example scene
-- Refactor primitives to create scene objects
-- Extract profiling/testing code
-- Extract debugging/logging
-- Extends -> Composition (JFrame)
-- Make constants final
-- Naming conventions
-- Move functionality of the Cube class
-- Refactor matrix-rotation code
+1. Build the JAR including the Manifest
+2. Run the program, using this parameter: `-javaagent:path-to-jar.jar`
+
+Note that the asm package must be on the classpath.

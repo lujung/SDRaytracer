@@ -1,6 +1,6 @@
-package Raytracer.Scenes;
+package src.main.java.Scenes;
 
-import Raytracer.Datatypes.*;
+import src.main.java.Datatypes.*;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class Scenes {
     public static Light[] lights = new Light[]{mainLight
             , new Light(new Vec3D(100, 200, 300), new RGB(0.5f, 0, 0.0f))
             , new Light(new Vec3D(-100, 200, 300), new RGB(0.0f, 0, 0.5f))
-            //,new Raytracer.Datatypes.Light(new Raytracer.Datatypes.Vec3D(-100,0,0), new Raytracer.Datatypes.RGB(0.0f,0.8f,0.0f))
+            //,new src.main.java.Datatypes.Light(new src.main.java.Datatypes.Vec3D(-100,0,0), new src.main.java.Datatypes.RGB(0.0f,0.8f,0.0f))
     };
 
     public static void getExampleScene(List<Triangle> triangles, int y_angle_factor, int x_angle_factor) {

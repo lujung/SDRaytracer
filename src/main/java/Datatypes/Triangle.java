@@ -1,4 +1,4 @@
-package Raytracer.Datatypes;
+package src.main.java.Datatypes;
 
 public class Triangle {
     Vec3D p1, p2, p3;

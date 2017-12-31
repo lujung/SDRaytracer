@@ -1,8 +1,8 @@
-package Raytracer;
+package src.main.java;
 
-import Raytracer.Datatypes.*;
-import Raytracer.Scenes.Scenes;
-import Raytracer.Util.Profiling;
+import src.main.java.Datatypes.*;
+import src.main.java.Profiling.Profiling;
+import src.main.java.Scenes.Scenes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-import static Raytracer.Util.Profiling.profilingDecorator;
+import static src.main.java.Profiling.Profiling.profilingDecorator;
 
-/* Implementation of a very simple Raytracer
+/* Implementation of a very simple src
    Stephan Diehl, Universit�t Trier, 2010-2016
 */
 

@@ -1,4 +1,4 @@
-package Raytracer.Datatypes;
+package src.main.java.Datatypes;
 
 public class Ray {
     public Vec3D start = new Vec3D(0, 0, 0);
@@ -35,7 +35,7 @@ public class Ray {
         float dist = f * e2.dot(q);
         if (dist < epsilon) return new IPoint(null, null, -1);
         Vec3D ip = t.p1.mult(1 - u - v).add(t.p2.mult(u)).add(t.p3.mult(v));
-        //Raytracer.DEBUG.debug("Intersection point: "+ip.x+","+ip.y+","+ip.z);
+        //src.DEBUG.debug("Intersection point: "+ip.x+","+ip.y+","+ip.z);
         return new IPoint(t, ip, dist);
     }
 }

@@ -1,4 +1,4 @@
-package Raytracer.Datatypes;
+package src.main.java.Datatypes;
 
 public class Light {
     public RGB color;

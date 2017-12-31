@@ -1,4 +1,4 @@
-package Raytracer.Datatypes;
+package src.main.java.Datatypes;
 
 import java.awt.*;
 

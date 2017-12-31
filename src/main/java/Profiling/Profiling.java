@@ -1,6 +1,6 @@
-package Raytracer.Util;
+package src.main.java.Profiling;
 
-import Raytracer.SDRaytracer;
+import src.main.java.SDRaytracer;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

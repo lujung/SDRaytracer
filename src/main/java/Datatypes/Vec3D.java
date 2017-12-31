@@ -1,4 +1,4 @@
-package Raytracer.Datatypes;
+package src.main.java.Datatypes;
 
 public class Vec3D {
     float x, y, z, w = 1;
